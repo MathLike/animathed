@@ -2,3 +2,6 @@
 name = "mathlike-animathed"
 classifiers = ["Private :: Do Not Upload"]
 version = "0"
+
+[tool.setuptools]
+packages = ["animathed"]

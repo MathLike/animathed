@@ -38,6 +38,7 @@ def open_file(file_path):
 
 def run(draw_frame_func, frame_count, output_name, width=500, height=500, frame_rate=30):
     # frame_count += 1
+    path = os.path.join("videos", output_name + ".mp4")
     command = [
         'ffmpeg',
         '-y',
@@ -49,8 +50,13 @@ def run(draw_frame_func, frame_count, output_name, width=500, height=500, frame_
         '-i', '-',
         '-loglevel','error',
         '-vcodec', 'libx264', '-pix_fmt', 'yuv420p',
-        f'videos/{output_name}.mp4'
-    ] 
+        path
+    ]
+
+    if not os.path.exists(path):
+        if not os.path.exists("./videos"):
+            os.mkdir("videos")
+        open(path, "w+")
 
     p = sp.Popen(command, stdin=sp.PIPE)
     bar = progressbar.ProgressBar(maxval=frame_count).start()
@@ -61,4 +67,4 @@ def run(draw_frame_func, frame_count, output_name, width=500, height=500, frame_
         bar.update(frame_num)
     p.stdin.close()
     p.wait()
-    open_file(f"videos/{output_name}.mp4")
+    open_file(path)
