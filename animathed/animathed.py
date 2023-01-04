@@ -16,24 +16,24 @@ def open_file(file_path):
     """
     Open video file at the end
     """
-        current_os = platform.system()
+    current_os = platform.system()
 
-        if current_os == "Windows":
-            os.startfile(file_path)
-        else:
-            commands = []
-            if current_os == "Linux":
-                commands.append("xdg-open")
-            elif current_os.startswith("CYGWIN"):
-                commands.append("cygstart")
-            else:  # Assume macOS
-                commands.append("open")
+    if current_os == "Windows":
+        os.startfile(file_path)
+    else:
+        commands = []
+        if current_os == "Linux":
+            commands.append("xdg-open")
+        elif current_os.startswith("CYGWIN"):
+            commands.append("cygstart")
+        else:  # Assume macOS
+            commands.append("open")
 
-            commands.append(file_path)
+        commands.append(file_path)
 
-            FNULL = open(os.devnull, 'w')
-            sp.call(commands, stdout=FNULL, stderr=sp.STDOUT)
-            FNULL.close()
+        FNULL = open(os.devnull, 'w')
+        sp.call(commands, stdout=FNULL, stderr=sp.STDOUT)
+        FNULL.close()
 
 
 def run(draw_frame_func, frame_count, output_name, width=500, height=500, frame_rate=30):
@@ -62,5 +62,3 @@ def run(draw_frame_func, frame_count, output_name, width=500, height=500, frame_
     p.stdin.close()
     p.wait()
     open_file(f"videos/{output_name}.mp4")
-
-
